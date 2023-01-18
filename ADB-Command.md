@@ -92,3 +92,38 @@ adb uninstall -k test.apk
 
 adb uninstall packageName (clean uninstall)  
 adb uninstall package_name
+
+Send a sms  
+adb emu sms send "operator_number" "text_message"
+
+Check installer source:  
+adb -s emulator-5556 shell pm list packages -i ir.divar
+
+Set source package:  
+adb -s emulator-5554 shell su 11234 'pm set-installer ir.divar ir.divar'
+
+### ADB Bucket
+Get current bucket  
+adb shell am get-standby-bucket package_name  
+
+Set a bucket  
+adb shell am set-standby-bucket package_name bucket_number
+
+Buckets List:  
+**STANDBY_BUCKET_NEVER** = 50, The app has never been used.  
+**STANDBY_BUCKET_EXEMPTED** = 5, Exempted battery optimizations and the Doze and App Standy does not apply to the app.  
+**STANDBY_BUCKET_ACTIVE** = 10, The app was used very recently, currently in use or likely to be used very soon.
+Standby bucket values that are &le; {@link #STANDBY_BUCKET_ACTIVE} will not be throttled by the system while they are in this bucket.
+Buckets &gt; {@link #STANDBY_BUCKET_ACTIVE} will most likely be restricted in some way.
+For instance, jobs and alarms may be deferred. @see #getAppStandbyBucket()  
+**STANDBY_BUCKET_WORKING_SET** = 20, The app was used recently and/or likely to be used in the next few hours.
+Restrictions will apply to these apps, such as deferral of jobs and alarms.
+@see #getAppStandbyBucket()  
+**STANDBY_BUCKET_FREQUENT** = 30, The app has not be used for several days and/or is unlikely to be used for several days.
+Apps in this bucket will have more restrictions, including network restrictions, 
+except during certain short periods (at a minimum, once a day) when they are allowed to execute
+jobs, access the network, etc. @see #getAppStandbyBucket()
+**STANDBY_BUCKET_RESTRICTED** = 45, The app has not be used for several days, is unlikely to be used for several days, 
+and has been misbehaving in some manner. Apps in this bucket will have the most restrictions, 
+including network restrictions and additional restrictions on jobs. 
+Note: this bucket is not enabled in {@link Build.VERSION_CODES#R}. @see #getAppStandbyBucket()
