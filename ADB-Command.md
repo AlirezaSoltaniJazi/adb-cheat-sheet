@@ -93,7 +93,7 @@ adb uninstall -k test.apk
 adb uninstall packageName (clean uninstall)  
 adb uninstall package_name
 
-Send a sms  
+Send a sms to a emulator
 adb emu sms send "operator_number" "text_message"
 
 Check installer source:  
